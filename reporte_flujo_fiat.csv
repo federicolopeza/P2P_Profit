@@ -1,0 +1,4 @@
+ID_Venta,Moneda_Generada,Monto_Neto_Generado_Moneda_Original,Monto_Fiat_Utilizado_Moneda_Original,Monto_Fiat_Disponible_Moneda_Original,Estado_Fiat,Fecha_Venta
+V001,UYU,8999.6286,0.0,8999.6286,Disponible,2025-06-01
+V002,UYU,172602.58899999998,0.0,172602.58899999998,Disponible,2025-06-02
+V003,UYU,48499.66,0.0,48499.66,Disponible,2025-06-02
