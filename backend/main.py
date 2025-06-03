@@ -16,6 +16,9 @@ from contextlib import asynccontextmanager
 import logging
 from datetime import datetime
 
+# Importar routers de la API
+from app.api.reports import get_routers
+
 # Configurar logging
 logging.basicConfig(
     level=logging.INFO,
@@ -40,10 +43,18 @@ DESCRIPTION = """
 
 ## Endpoints disponibles
 
-* `/transactions/` - Gestión de transacciones
-* `/reports/` - Generación de reportes
-* `/metrics/` - Métricas y KPIs
-* `/users/` - Gestión de usuarios (próximamente)
+### 📊 Reportes
+* `GET /api/v1/reports/pl` - Reporte P&L completo
+* `GET /api/v1/reports/flow` - Flujo de fiat detallado
+* `GET /api/v1/reports/summary` - Resumen ejecutivo
+
+### 🔄 Gestión de Datos
+* `POST /api/v1/data/reload` - Recargar datos CSV
+* `GET /api/v1/data/health` - Estado de salud de datos
+
+### ℹ️ Información
+* `GET /health` - Health check
+* `GET /api/v1/info` - Información de la API
 """
 
 @asynccontextmanager
@@ -52,6 +63,15 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("🚀 Iniciando P2P Profit API...")
     logger.info("📊 Cargando configuración inicial...")
+    
+    # Intentar cargar datos CSV al inicio
+    try:
+        from app.core.csv_reader import csv_manager
+        logger.info("📈 Cargando datos CSV iniciales...")
+        csv_manager.reload_all_data()
+        logger.info("✅ Datos CSV cargados exitosamente")
+    except Exception as e:
+        logger.warning(f"⚠️ No se pudieron cargar datos CSV al inicio: {e}")
     
     yield
     
@@ -94,6 +114,11 @@ async def log_requests(request, call_next):
     
     return response
 
+# Incluir routers de la API
+routers = get_routers()
+for router in routers:
+    app.include_router(router)
+
 # Rutas básicas
 @app.get("/")
 async def root():
@@ -103,39 +128,77 @@ async def root():
         "version": VERSION,
         "status": "🟢 Activo",
         "docs": "/docs",
+        "endpoints": {
+            "📊 Reportes": [
+                "/api/v1/reports/pl",
+                "/api/v1/reports/flow", 
+                "/api/v1/reports/summary"
+            ],
+            "🔄 Datos": [
+                "/api/v1/data/reload",
+                "/api/v1/data/health"
+            ]
+        },
         "timestamp": datetime.now().isoformat()
     }
 
 @app.get("/health")
 async def health_check():
     """Health check para monitoreo"""
+    # Verificar estado de datos CSV
+    try:
+        from app.core.csv_reader import csv_manager
+        data_status = csv_manager.get_stats()
+        data_healthy = data_status["data_loaded"]
+    except Exception:
+        data_healthy = False
+    
     return {
-        "status": "🟢 Healthy",
+        "status": "🟢 Healthy" if data_healthy else "🟡 API OK, datos no cargados",
         "timestamp": datetime.now().isoformat(),
         "service": APP_NAME,
-        "version": VERSION
+        "version": VERSION,
+        "data_status": "✅ Datos CSV cargados" if data_healthy else "⚠️ Datos CSV no cargados"
     }
 
 @app.get("/api/v1/info")
 async def api_info():
     """Información detallada de la API"""
+    # Obtener estado de datos
+    try:
+        from app.core.csv_reader import csv_manager
+        data_stats = csv_manager.get_stats()
+    except Exception:
+        data_stats = {"error": "No se pudieron obtener estadísticas"}
+    
     return {
         "api_name": APP_NAME,
         "version": VERSION,
         "description": "API REST para seguimiento P2P cripto",
         "endpoints": {
-            "transactions": "/api/v1/transactions/",
-            "reports": "/api/v1/reports/", 
-            "metrics": "/api/v1/metrics/",
-            "health": "/health"
+            "reports": {
+                "pl": "/api/v1/reports/pl",
+                "flow": "/api/v1/reports/flow",
+                "summary": "/api/v1/reports/summary"
+            },
+            "data": {
+                "reload": "/api/v1/data/reload",
+                "health": "/api/v1/data/health"
+            },
+            "info": {
+                "health": "/health",
+                "api_info": "/api/v1/info"
+            }
         },
         "features": [
             "🧮 Cálculo CPP automático",
-            "💱 Soporte multi-moneda",
-            "📊 Reportes en tiempo real",
+            "💱 Soporte multi-moneda (USD/UYU)",
+            "📊 Reportes P&L en tiempo real",
             "🔄 Seguimiento de flujo fiat",
-            "🏦 Integración con exchanges"
+            "📈 Métricas y analytics avanzados",
+            "📁 Integración con archivos CSV"
         ],
+        "data_status": data_stats,
         "timestamp": datetime.now().isoformat()
     }
 
