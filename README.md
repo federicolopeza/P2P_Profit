@@ -6,7 +6,6 @@
 
 [![Python](https://img.shields.io/badge/Python-3.7+-blue?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![Pandas](https://img.shields.io/badge/Pandas-2.0+-green?style=flat-square&logo=pandas&logoColor=white)](https://pandas.pydata.org)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-1.0.0-red?style=flat-square)](https://github.com/user/p2p-profit)
 
 **Sistema avanzado de seguimiento y análisis P2P para transacciones de criptomonedas con cálculo automático de P&L usando metodología CPP (Costo Promedio Ponderado)**
@@ -347,13 +346,13 @@ P2P_Profit/
 │   │   └── reporte_flujo_fiat.csv  # 💱 Seguimiento de fiat
 │   └── 🗄️ backups/                 # Respaldos automáticos
 ├── 📚 docs/                         # Documentación
-│   ├── README.md                   # 📋 Documentación principal
-│   ├── prompt.md                   # 🔧 Guía de desarrollo
-│   └── prompt_01.md                # 📖 Especificaciones detalladas
+│   ├── README.md                   # 📋 Documentación principal (Este archivo)
+│   ├── prompt.md                   # 🔧 Guía de desarrollo histórica
+│   └── prompt_01.md                # 📖 Especificaciones históricas detalladas
 ├── 🔧 requirements.txt              # Dependencias Python
-├── 📜 LICENSE                       # Licencia MIT
+├── 📜 LICENSE                       # Licencia del Proyecto
 ├── 🚫 .gitignore                    # Configuración Git
-└── 📊 test_read_csv.py              # Script de pruebas
+└── README.md                       # Enlace simbólico o copia del README principal del proyecto
 ```
 
 ### 🗂️ **Descripción de Archivos**
@@ -658,7 +657,7 @@ El sistema espera tres archivos CSV específicos en el directorio `data/`:
 ```csv
 ID_Compra,Fecha_Compra,Cantidad_USDT_Comprada,Moneda_Pago,Precio_Unitario_Moneda_Pago,Tasa_Cambio_UYU_USD_Compra,Fuente_De_Fondos_Fiat,Comisiones_Compra_Moneda_Pago,Plataforma
 C001,2024-01-15,100.0,USD,1.0,1.0,Capital Nuevo,0.0,Binance
-C002,2024-02-10,200.0,UYU,41.0,41.0,Capital Nuevo,50.0,WhatsApp
+C002,2024-02-10,200.0,UYU,41.0,41.0,Venta_ID_V001,50.0,WhatsApp
 ```
 
 ### 2. `data/ventas_usdt.csv`
@@ -671,10 +670,10 @@ V002,2024-03-15,120.0,UYU,42.5,42.5,100.0,WhatsApp
 ### 3. `data/conversiones_fiat.csv` (Opcional)
 ```csv
 ID_Conversion,Fecha_Conversion,Moneda_Origen,Cantidad_Origen,Moneda_Destino,Cantidad_Destino,ID_Venta_Asociada,Notas
-CF001,2024-03-20,UYU,5000.0,USD,120.0,N/A,Dashboard Input
+CF001,2024-03-20,UYU,5000.0,USD,120.0,V002,Conversion de UYU restante de V002 a USD
 ```
 
-> **Nota**: Si alguno de estos archivos no existe al ejecutar los scripts, se crearán automáticamente con datos de ejemplo en la carpeta `data/`.
+> **Nota**: Si alguno de estos archivos no existe al ejecutar los scripts, se crearán automáticamente con datos de ejemplo en la carpeta `data/` mediante la función `crear_archivos_ejemplo()` del script `src/script_p2p_tracker.py`.
 
 ---
 
@@ -743,35 +742,6 @@ El código está diseñado para ser fácilmente modificable:
 - **Cálculos**: Modificar lógica o añadir nuevas métricas en `src/script_p2p_tracker.py`
 - **Integración**: Conectar con APIs o bases de datos
 
----
-
-## 📜 Licencia
-
-```
-MIT License
-
-Copyright (c) 2024 P2P Profit Project
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
-
----
 
 <div align="center">
 

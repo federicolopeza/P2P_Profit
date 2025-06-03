@@ -15,6 +15,9 @@ from datetime import datetime
 from typing import Dict, List, Tuple
 # import json # No se utiliza
 
+# Importar la función para crear ejemplos desde el script tracker
+from script_p2p_tracker import crear_archivos_ejemplo as crear_ejemplos_desde_tracker
+
 # --- Definición de rutas ---
 # Obtener la ruta absoluta del script actual (dashboard_p2p.py)
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -126,6 +129,8 @@ class P2PDashboard:
         try:
             if os.path.exists(COMPRAS_CSV):
                 df = pd.read_csv(COMPRAS_CSV)
+                if 'Plataforma' in df.columns:
+                    df['Plataforma'] = df['Plataforma'].astype(str).str.lower()
                 self.datos['compras'] = df.to_dict('records')
             else: # Asegurar que la lista se vacíe si el archivo no existe o es borrado
                 self.datos['compras'] = []
@@ -133,6 +138,8 @@ class P2PDashboard:
             
             if os.path.exists(VENTAS_CSV):
                 df = pd.read_csv(VENTAS_CSV)
+                if 'Plataforma' in df.columns:
+                    df['Plataforma'] = df['Plataforma'].astype(str).str.lower()
                 self.datos['ventas'] = df.to_dict('records')
             else:
                 self.datos['ventas'] = []
@@ -201,6 +208,12 @@ class P2PDashboard:
             moneda = input("💰 Moneda (USD/UYU): ").upper()
             precio = float(input(f"💵 Precio por USDT en {moneda}: "))
             plataforma = input("🏦 Plataforma (Binance/WhatsApp/Otro): ").strip().lower()
+
+            tasa_cambio_compra = 1.0
+            if moneda == 'UYU':
+                tasa_cambio_compra = float(input(f"💱 Tasa de Cambio UYU a USD para esta compra (ej: 39.5): "))
+            
+            fuente_fondos = input("📊 Fuente de Fondos Fiat (ej: Capital Nuevo, Venta_ID_V001, Conversion_ID_CF1): ").strip()
             
             comisiones = 0.0
             if plataforma == 'binance':
@@ -213,7 +226,7 @@ class P2PDashboard:
             print(f"\n💰 Costo base (sin comisiones): {costo:.2f} {moneda}")
             
             if input("\n✅ ¿Guardar? (s/n): ").lower().startswith('s'):
-                self.guardar_compra_simple(nuevo_id, cantidad, moneda, precio, plataforma, comisiones)
+                self.guardar_compra_simple(nuevo_id, cantidad, moneda, precio, plataforma, comisiones, tasa_cambio_compra, fuente_fondos)
                 print("🎉 ¡Compra guardada!")
             
         except ValueError:
@@ -240,6 +253,10 @@ class P2PDashboard:
             precio = float(input(f"💵 Precio por USDT en {moneda}: "))
             plataforma = input("🏦 Plataforma (Binance/WhatsApp/Otro): ").strip().lower()
 
+            tasa_cambio_venta = 1.0
+            if moneda == 'UYU':
+                tasa_cambio_venta = float(input(f"💱 Tasa de Cambio UYU a USD para esta venta (ej: 40.2): "))
+
             comisiones = 0.0
             if plataforma == 'binance':
                 print(f"ℹ️ Para Binance, las comisiones se calcularán automáticamente.")
@@ -250,7 +267,7 @@ class P2PDashboard:
             print(f"\n💰 Ingreso base (sin comisiones): {ingreso:.2f} {moneda}")
             
             if input("\n✅ ¿Guardar? (s/n): ").lower().startswith('s'):
-                self.guardar_venta_simple(nuevo_id, cantidad, moneda, precio, plataforma, comisiones)
+                self.guardar_venta_simple(nuevo_id, cantidad, moneda, precio, plataforma, comisiones, tasa_cambio_venta)
                 print("🎉 ¡Venta guardada!")
             
         except ValueError:
@@ -276,13 +293,22 @@ class P2PDashboard:
             cant_origen = float(input(f"💰 Cantidad {origen}: "))
             destino = 'UYU' if origen == 'USD' else 'USD'
             cant_destino = float(input(f"💰 Cantidad {destino} recibida: "))
+            id_venta_asociada = input("🔗 ID Venta Asociada (o N/A si no aplica): ").strip()
+            notas = input("📝 Notas (opcional): ").strip()
             
             # Mostrar tasa
-            tasa = cant_origen / cant_destino
-            print(f"\n📊 Tasa: {tasa:.4f} {origen}/{destino}")
+            tasa = cant_destino / cant_origen if cant_origen != 0 else 0 # Tasa destino/origen
+            if origen == 'UYU' and destino == 'USD': # Si es UYU a USD, la tasa es UYU por USD
+                tasa = cant_origen / cant_destino if cant_destino != 0 else 0
+                print(f"\n📊 Tasa: {tasa:.4f} UYU/USD")
+            elif origen == 'USD' and destino == 'UYU': # Si es USD a UYU, la tasa es UYU por USD
+                tasa = cant_destino / cant_origen if cant_origen != 0 else 0
+                print(f"\n📊 Tasa: {tasa:.4f} UYU/USD")
+            else: # Caso genérico, podría ser USD/USD o UYU/UYU (no debería ocurrir)
+                 print(f"\n📊 Tasa calculada: {tasa:.4f} {destino}/{origen}")
             
             if input("\n✅ ¿Guardar? (s/n): ").lower().startswith('s'):
-                self.guardar_conversion_simple(nuevo_id, origen, cant_origen, destino, cant_destino)
+                self.guardar_conversion_simple(nuevo_id, origen, cant_origen, destino, cant_destino, id_venta_asociada, notas)
                 print("🎉 ¡Conversión guardada!")
             
         except ValueError:
@@ -485,7 +511,7 @@ class P2PDashboard:
             for conv in self.datos['conversiones']:
                 fecha = conv.get('Fecha_Conversion', 'N/A')[:10]
                 tasa = (conv.get('Cantidad_Origen', 0) / conv.get('Cantidad_Destino', 1))
-                print(f"{conv.get('ID_Conversion_Fiat', 'N/A'):<8} {fecha:<12} "
+                print(f"{conv.get('ID_Conversion', 'N/A'):<8} {fecha:<12} "
                       f"{conv.get('Moneda_Origen', 'N/A'):<8} "
                       f"{conv.get('Moneda_Destino', 'N/A'):<8} "
                       f"{tasa:<10.4f}")
@@ -610,20 +636,18 @@ class P2PDashboard:
                 print(f"Error leyendo {archivo_path} para obtener último ID: {e}")
         return max_id
 
-    def guardar_compra_simple(self, id_compra: str, cantidad: float, moneda: str, precio: float, plataforma: str, comisiones: float):
+    def guardar_compra_simple(self, id_compra: str, cantidad: float, moneda: str, precio: float, plataforma: str, comisiones: float, tasa_cambio: float, fuente_fondos: str):
         """Guarda una compra simple en el CSV y actualiza el estado interno."""
         fecha_actual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        # Tasa_Cambio_UYU_USD_Compra y Fuente_De_Fondos_Fiat se dejan vacíos o con valor por defecto
-        # ya que este es un formulario simplificado.
         nueva_compra = {
             'ID_Compra': id_compra,
             'Fecha_Compra': fecha_actual, 
             'Cantidad_USDT_Comprada': cantidad,
             'Moneda_Pago': moneda,
             'Precio_Unitario_Moneda_Pago': precio,
-            'Tasa_Cambio_UYU_USD_Compra': 1.0 if moneda == 'USD' else '', # Asumir 1.0 para USD, vacío para UYU
-            'Fuente_De_Fondos_Fiat': 'Capital Nuevo', # Valor por defecto
-            'Comisiones_Compra_Moneda_Pago': comisiones, # Ya se maneja como 0 para no-Binance
+            'Tasa_Cambio_UYU_USD_Compra': tasa_cambio,
+            'Fuente_De_Fondos_Fiat': fuente_fondos,
+            'Comisiones_Compra_Moneda_Pago': comisiones,
             'Plataforma': plataforma
         }
         self.datos['compras'].append(nueva_compra)
@@ -633,19 +657,17 @@ class P2PDashboard:
         df_compras.to_csv(COMPRAS_CSV, index=False)
         self.data_loaded = True # Actualizar estado
 
-    def guardar_venta_simple(self, id_venta: str, cantidad: float, moneda: str, precio: float, plataforma: str, comisiones: float):
+    def guardar_venta_simple(self, id_venta: str, cantidad: float, moneda: str, precio: float, plataforma: str, comisiones: float, tasa_cambio: float):
         """Guarda una venta simple en el CSV y actualiza el estado interno."""
         fecha_actual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        # Similar a compras, campos adicionales con valores por defecto o vacíos.
         nueva_venta = {
             'ID_Venta': id_venta,
             'Fecha_Venta': fecha_actual,
             'Cantidad_USDT_Vendida': cantidad,
-            'Moneda_Cobro': moneda,
-            'Precio_Unitario_Moneda_Cobro': precio,
-            'Tasa_Cambio_UYU_USD_Venta': 1.0 if moneda == 'USD' else '',
-            'Destino_De_Fondos_Fiat': 'Banco',
-            'Comisiones_Venta_Moneda_Cobro': comisiones,
+            'Moneda_Recibida': moneda,
+            'Precio_Unitario_Moneda_Recibida': precio,
+            'Tasa_Cambio_UYU_USD_Venta': tasa_cambio,
+            'Comisiones_Venta_Moneda_Recibida': comisiones,
             'Plataforma': plataforma
         }
         self.datos['ventas'].append(nueva_venta)
@@ -655,7 +677,7 @@ class P2PDashboard:
         df_ventas.to_csv(VENTAS_CSV, index=False)
         self.data_loaded = True # Actualizar estado
 
-    def guardar_conversion_simple(self, id_conversion: str, origen: str, cant_origen: float, destino: str, cant_destino: float):
+    def guardar_conversion_simple(self, id_conversion: str, origen: str, cant_origen: float, destino: str, cant_destino: float, id_venta_asociada: str, notas: str):
         """Guarda una conversión simple en el CSV y actualiza el estado interno."""
         fecha_actual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         nueva_conversion = {
@@ -665,7 +687,8 @@ class P2PDashboard:
             'Cantidad_Origen': cant_origen,
             'Moneda_Destino': destino,
             'Cantidad_Destino': cant_destino,
-            'Tasa_Conversion_Calculada': cant_destino / cant_origen if cant_origen != 0 else 0
+            'ID_Venta_Asociada': id_venta_asociada if id_venta_asociada.upper() != 'N/A' else '',
+            'Notas': notas
         }
         self.datos['conversiones'].append(nueva_conversion)
         
@@ -708,25 +731,19 @@ class P2PDashboard:
         input("\nPresiona Enter para volver...")
 
     def crear_ejemplos(self):
-        """Crea archivos CSV de ejemplo si no existen."""
-        # Define las cabeceras para cada archivo
-        headers = {
-            COMPRAS_CSV: ["ID_Compra", "Fecha_Compra", "Cantidad_USDT_Comprada", "Moneda_Pago", 
-                              "Precio_Unitario_Moneda_Pago", "Tasa_Cambio_UYU_USD_Compra", 
-                              "Fuente_De_Fondos_Fiat", "Comisiones_Compra_Moneda_Pago", "Plataforma"],
-            VENTAS_CSV: ["ID_Venta", "Fecha_Venta", "Cantidad_USDT_Vendida", "Moneda_Cobro", 
-                             "Precio_Unitario_Moneda_Cobro", "Tasa_Cambio_UYU_USD_Venta", 
-                             "Destino_De_Fondos_Fiat", "Comisiones_Venta_Moneda_Cobro", "Plataforma"],
-            CONVERSIONES_CSV: ["ID_Conversion", "Fecha_Conversion", "Moneda_Origen", "Cantidad_Origen", 
-                                   "Moneda_Destino", "Cantidad_Destino", "Tasa_Conversion_Calculada"]
-        }
-
-        for archivo, cabecera in headers.items():
-            if not os.path.exists(archivo):
-                pd.DataFrame(columns=cabecera).to_csv(archivo, index=False)
-                print(f"📄 Archivo de ejemplo '{os.path.basename(archivo)}' creado.")
-            else:
-                print(f"👍 Archivo '{os.path.basename(archivo)}' ya existe.")
+        """Llama a la función de script_p2p_tracker para crear archivos CSV de ejemplo."""
+        self.limpiar_pantalla()
+        self.mostrar_header()
+        print("\n" + "─"*10 + " CREAR DATOS DE EJEMPLO " + "─"*10)
+        print("\n🟡 Intentando crear archivos de ejemplo con datos significativos...")
+        try:
+            crear_ejemplos_desde_tracker() # Llamada a la función importada
+            print("\n✅ Proceso de creación de ejemplos finalizado.")
+            print("   Verifica la consola del script para más detalles.")
+        except Exception as e:
+            print(f"\n❌ Error al intentar crear archivos de ejemplo: {e}")
+            print("   Asegúrate que el script 'script_p2p_tracker.py' está accesible.")
+        
         input("\nPresiona Enter para continuar...")
 
     def backup(self):

@@ -14,6 +14,18 @@ import os
 from datetime import datetime
 from typing import Dict, List, Tuple
 
+# --- Definición de rutas --- SCRIPT_DIR y BASE_DIR para P2P_Profit/
+SCRIPT_DIR_TRACKER = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR_TRACKER = os.path.dirname(SCRIPT_DIR_TRACKER) # P2P_Profit/
+DATA_DIR_TRACKER = os.path.join(BASE_DIR_TRACKER, 'data')
+REPORTS_DIR_TRACKER = os.path.join(DATA_DIR_TRACKER, 'reports')
+
+# Rutas a los archivos de datos principales
+COMPRAS_CSV_TRACKER = os.path.join(DATA_DIR_TRACKER, 'compras_usdt.csv')
+VENTAS_CSV_TRACKER = os.path.join(DATA_DIR_TRACKER, 'ventas_usdt.csv')
+CONVERSIONES_CSV_TRACKER = os.path.join(DATA_DIR_TRACKER, 'conversiones_fiat.csv')
+# --- Fin Definición de rutas ---
+
 class P2PTracker:
     BINANCE_FEE_UYU = 0.0016  # 0.16%
     BINANCE_FEE_USD = 0.0028  # 0.28%
@@ -378,8 +390,7 @@ class P2PTracker:
         """Genera los reportes CSV"""
         print("🟡 Generando reportes...")
         
-        report_dir = '../data/reports/'
-        os.makedirs(report_dir, exist_ok=True) # Asegurar que el directorio de reportes exista
+        os.makedirs(REPORTS_DIR_TRACKER, exist_ok=True) # Asegurar que el directorio de reportes exista
 
         # Reporte de P&L de Ventas
         if self.df_ventas_calc is not None and not self.df_ventas_calc.empty:
@@ -397,7 +408,7 @@ class P2PTracker:
                 if col not in df_reporte_ventas.columns:
                     df_reporte_ventas[col] = pd.NA 
             
-            filepath_ventas_pl = os.path.join(report_dir, 'reporte_ventas_pl.csv')
+            filepath_ventas_pl = os.path.join(REPORTS_DIR_TRACKER, 'reporte_ventas_pl.csv')
             try:
                 df_reporte_ventas[columnas_reporte_ventas].to_csv(filepath_ventas_pl, index=False)
                 print(f"✅ Reporte de P&L de ventas guardado en '{filepath_ventas_pl}'")
@@ -415,7 +426,7 @@ class P2PTracker:
             df_flujo_fiat = pd.DataFrame.from_dict(self.fiat_tracker, orient='index')
             df_flujo_fiat.index.name = 'ID_Venta'
             if not df_flujo_fiat.empty:
-                filepath_flujo_fiat = os.path.join(report_dir, 'reporte_flujo_fiat.csv')
+                filepath_flujo_fiat = os.path.join(REPORTS_DIR_TRACKER, 'reporte_flujo_fiat.csv')
                 try:
                     df_flujo_fiat.to_csv(filepath_flujo_fiat, index=False)
                     print(f"✅ Reporte de flujo de fiat guardado en '{filepath_flujo_fiat}'")
@@ -433,20 +444,24 @@ def crear_archivos_ejemplo():
     print("🟡 Verificando archivos de ejemplo...")
 
     archivos_a_verificar = {
-        '../data/compras_usdt.csv': {
+        # Rutas antiguas comentadas
+        # '../data/compras_usdt.csv': {
+        COMPRAS_CSV_TRACKER: {
             'columnas': ['ID_Compra', 'Fecha_Compra', 'Cantidad_USDT_Comprada', 'Moneda_Pago', 'Precio_Unitario_Moneda_Pago', 'Tasa_Cambio_UYU_USD_Compra', 'Fuente_De_Fondos_Fiat', 'Comisiones_Compra_Moneda_Pago', 'Plataforma'],
             'data': [
                 ['C1', '2023-01-01 10:00:00', 100.0, 'UYU', 39.5, 39.5, 'Ahorros UYU', 0.0, 'binance'],
                 ['C2', '2023-01-05 15:30:00', 50.0, 'USD', 1.01, 1.0, 'Ahorros USD', 0.0, 'otro'],
             ]
         },
-        '../data/ventas_usdt.csv': {
+        # '../data/ventas_usdt.csv': {
+        VENTAS_CSV_TRACKER: {
             'columnas': ['ID_Venta', 'Fecha_Venta', 'Cantidad_USDT_Vendida', 'Moneda_Recibida', 'Precio_Unitario_Moneda_Recibida', 'Tasa_Cambio_UYU_USD_Venta', 'Comisiones_Venta_Moneda_Recibida', 'Plataforma'],
             'data': [
                 ['V1', '2023-01-10 12:00:00', 70.0, 'UYU', 40.5, 40.0, 0.0, 'binance'],
             ]
         },
-        '../data/conversiones_fiat.csv': {
+        # '../data/conversiones_fiat.csv': {
+        CONVERSIONES_CSV_TRACKER: {
             'columnas': ['ID_Conversion', 'Fecha_Conversion', 'Moneda_Origen', 'Cantidad_Origen', 'Moneda_Destino', 'Cantidad_Destino', 'ID_Venta_Asociada', 'Notas'],
             'data': [
                 ['CF1', '2023-01-11 09:00:00', 'UYU', 2835.0, 'USD', 70.0, 'V1', 'Conversion de UYU de venta V1 a USD'],
@@ -495,9 +510,12 @@ def main():
     
     # Cargar datos
     tracker.cargar_datos(
-        archivo_compras='../data/compras_usdt.csv', 
-        archivo_ventas='../data/ventas_usdt.csv', 
-        archivo_conversiones='../data/conversiones_fiat.csv'
+        # archivo_compras='../data/compras_usdt.csv', 
+        # archivo_ventas='../data/ventas_usdt.csv', 
+        # archivo_conversiones='../data/conversiones_fiat.csv'
+        archivo_compras=COMPRAS_CSV_TRACKER, 
+        archivo_ventas=VENTAS_CSV_TRACKER, 
+        archivo_conversiones=CONVERSIONES_CSV_TRACKER
     )
     
     # Realizar cálculos
