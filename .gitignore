@@ -119,12 +119,25 @@ dmypy.json
 
 # Backup P2P
 # backup_*.csv SE REEMPLAZA POR LA SIGUIENTE LÍNEA PARA REFLEJAR LA NUEVA UBICACIÓN
-data/backups/*.csv
+data/backups/
 
 # Archivos de datos (opcional, si no quieres subir datos de ejemplo/reales al repo)
-# data/compras_usdt.csv
-# data/ventas_usdt.csv
-# data/conversiones_fiat.csv
+# Los archivos CSV en data/ son tratados como plantillas/ejemplos por ahora.
+# Descomenta las siguientes líneas si deseas ignorarlos completamente.
+data/compras_usdt.csv
+data/ventas_usdt.csv
+data/conversiones_fiat.csv
 
-# Reportes generados (opcional, generalmente no se suben al repo)
-# data/reports/*.csv 
+# Reportes generados en la carpeta data/reports
+data/reports/
+
+# Reportes generados en la raíz del proyecto (si existen, pueden ser antiguos)
+reporte_flujo_fiat.csv
+reporte_ventas_pl.csv
+
+# Log de errores del dashboard
+log_errores_dashboard.txt
+
+# IDE specific files
+.vscode/
+.idea/ 

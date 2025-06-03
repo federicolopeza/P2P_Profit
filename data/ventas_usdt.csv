@@ -1,4 +1,4 @@
 ID_Venta,Fecha_Venta,Cantidad_USDT_Vendida,Moneda_Recibida,Precio_Unitario_Moneda_Recibida,Tasa_Cambio_UYU_USD_Venta,Comisiones_Venta_Moneda_Recibida,Plataforma
 V001,2025-06-01,202.74,UYU,44.39,42.3,0.0,binance
 V002,2025-06-02,4000.06,UYU,43.15,42.3,0.0,binance
-V003,2025-06-02,1089.88,UYU,44.5,42.3,0.0,whatsapp
+V003,2025-06-02,1089.88,UYU,44.5,42.3,0.0,binance
