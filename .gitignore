@@ -124,7 +124,9 @@ data/compras_usdt.csv
 data/ventas_usdt.csv
 data/conversiones_fiat.csv
 
-# Reportes generados automáticamente
+# Reportes generados automáticamente con datos sensibles
+data/reports/reporte_flujo_fiat.csv
+data/reports/reporte_ventas_pl.csv
 data/reports/
 reporte_flujo_fiat.csv
 reporte_ventas_pl.csv
@@ -143,5 +145,3 @@ log_errores_dashboard.txt
 # Archivos temporales del sistema
 .DS_Store
 Thumbs.db
-data/compras_usdt.csv
-data/conversiones_fiat.csv
