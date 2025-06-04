@@ -1,5 +1,0 @@
-ID_Compra,Fecha_Compra,Cantidad_USDT_Comprada,Moneda_Pago,Precio_Unitario_Moneda_Pago,Tasa_Cambio_UYU_USD_Compra,Fuente_De_Fondos_Fiat,Comisiones_Compra_Moneda_Pago,Plataforma
-C001,2025-06-01,621.95,USD,0.989,1.0,Capital Nuevo,0.0,binance
-C002,2025-06-02,119.95,USD,0.997,1.0,Capital Nuevo,0.0,binance
-C003,2025-06-02,7210.0,USD,1.0,1.0,Capital Nuevo,0.0,whatsapp
-C004,2025-06-02,312.5,USD,0.965,1.0,Capital Nuevo,0.0,binance
