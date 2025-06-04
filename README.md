@@ -56,18 +56,14 @@
 
 ### 🎨 **Herramientas Incluidas**
 
-🎛️ Dashboard Interactivo (`src/dashboard_p2p.py`)
-├── 📝 Gestión de datos con formularios guiados, validación en tiempo real y feedback visual.
-├── 📊 Visualización de datos mejorada con formato claro y paginación.
-├── ✨ Interfaz de consola con menús estéticos y navegación intuitiva.
-├── 🔧 Herramientas de administración (backups, estado de archivos, etc.).
-└── 📤 Exportación manual de reportes (desde el script principal invocado).
-
-🎨 Dashboard Rich (`src/dashboard_p2p_rich.py`) - ¡NUEVO!
+🎛️ Dashboard Interactivo Rich (`src/dashboard_p2p.py`)
 ├── 🌈 Interfaz CLI moderna con la biblioteca Rich
 ├── 📊 Tablas elegantes con colores y formato profesional
-├── 🎯 Menús intuitivos con navegación breadcrumb
+├── 🎯 Menús intuitivos con paneles redondeados
 ├── ✅ Validación en tiempo real con feedback visual
+├── 📝 Gestión de datos con formularios guiados
+├── 📊 Visualización de datos avanzada con paginación
+├── 🔧 Herramientas de administración integradas
 └── 📱 Experiencia de usuario optimizada para consola
 
 🤖 Script Automático (`src/script_p2p_tracker.py`)
@@ -75,7 +71,61 @@
 ├── 📈 Cálculos CPP automatizados
 ├── 📊 Generación automática de reportes
 └── 🔄 Integración con otros sistemas
+
+**Características destacadas de Rich:**
+- ✨ **Diseño Visual Moderno**: Paneles redondeados, colores profesionales y layout elegante
+- 🎯 **Navegación Intuitiva**: Menús claramente organizados con feedback visual
+- 📊 **Tablas Elegantes**: Formato automático con colores para P&L positivo/negativo
+- ✅ **Validación Visual**: Mensajes de error y éxito con paneles coloridos
+- 🔄 **Paginación Inteligente**: Navegación fluida en datasets grandes
+- 🎨 **Tema Consistente**: Paleta de colores unificada en toda la aplicación
+
+**Navegación del Dashboard:**
 ```
+1️⃣ Gestionar Datos de Transacciones
+   ├── 📝 Nueva Compra USDT
+   ├── 💸 Nueva Venta USDT  
+   ├── 🔄 Nueva Conversión Fiat
+   └── 👀 Ver Datos Existentes
+
+2️⃣ Ver Resumen Financiero Global
+   ├── 💰 P&L Total (Ganancias/Pérdidas)
+   ├── 📊 Estado del Inventario
+   ├── 📈 ROI y Métricas Principales
+   └── 🏢 Desglose por Plataforma
+
+3️⃣ Análisis Detallado por Categoría
+   ├── 🏪 Análisis por Plataforma
+   ├── 💱 Análisis por Moneda
+   ├── 📅 Análisis Temporal
+   └── 📋 Historial de Transacciones
+
+4️⃣ Herramientas y Utilidades
+   ├── 💾 Crear Backup de Datos
+   ├── 📄 Estado de Archivos
+   ├── ✅ Validar Integridad de Datos
+   └── 🔧 Configuración del Sistema
+```
+
+### 🚀 **Scripts y Automatización**
+
+#### Dashboard Principal Rich
+```bash
+python src/dashboard_p2p.py
+```
+- 🌈 **Interfaz Rich moderna** con paneles elegantes
+- 📝 **Gestión completa** de transacciones con validación visual
+- 📊 **Análisis en tiempo real** de P&L y ROI con tablas coloridas
+- 🔧 **Herramientas administrativas** con feedback profesional
+
+#### Script Automático
+```bash
+python src/script_p2p_tracker.py
+```
+- 🤖 **Procesamiento batch** de datos
+- 📈 **Reportes automáticos** en CSV
+- 🔍 **Validación de integridad** de datos
+- ⚡ **Cálculos optimizados** de CPP y P&L
 
 ---
 
@@ -88,13 +138,11 @@
 git clone https://github.com/user/p2p-profit.git
 cd p2p-profit
 
-# 2. Instalar dependencias
+# 2. Instalar dependencias (incluye Rich para interfaz moderna)
 pip install -r requirements.txt
 
 # 3. ¡Ejecutar!
-python src/dashboard_p2p_rich.py   # Dashboard interactivo moderno con Rich
-# o
-python src/dashboard_p2p.py       # Dashboard interactivo clásico
+python src/dashboard_p2p.py       # Dashboard interactivo
 # o
 python src/script_p2p_tracker.py  # Procesamiento automático
 ```
@@ -102,32 +150,35 @@ python src/script_p2p_tracker.py  # Procesamiento automático
 ### 🎯 **Primer uso en 30 segundos**
 
 ```bash
-# Dashboard moderno con Rich (RECOMENDADO)
-python src/dashboard_p2p_rich.py
+# Ejecutar dashboard moderno con Rich
+python src/dashboard_p2p.py
+```
 
-# Resultado esperado - Interfaz Rich moderna:
-# ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
-# ║                                                                                                          ║
-# ║  ✨ P2P CRYPTO TRACKER ✨ Dashboard Interactivo Profesional                                              ║
-# ║                                                                                                          ║
-# ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
-# 
-# ╭─────────────────────────── 📊 ESTADO RÁPIDO ────────────────────────────────╮
-# │ 🛍️ Compras Registradas:              0                                      │
-# │ 💸 Ventas Registradas:               0                                       │
-# │ 🔄 Conversiones Fiat:                0                                       │
-# │                                                                             │
-# │            ⚠️ Sin datos. Usa 'Gestionar Datos' para iniciar.              │
-# ╰─────────────────────────────────────────────────────────────────────────────╯
+**Salida esperada - Interfaz Rich:**
+```
+╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                                          ║
+║  ✨ P2P CRYPTO TRACKER ✨ Dashboard Interactivo Profesional                                              ║
+║                                                                                                          ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 
-# Procesamiento automático tradicional
-python src/script_p2p_tracker.py
+╭──────────────────────────── 📊 ESTADO RÁPIDO ────────────────────────────────╮
+│ 🛍️ Compras Registradas:              0                                        │
+│ 💸 Ventas Registradas:               0                                         │
+│ 🔄 Conversiones Fiat:                0                                         │
+│                                                                               │
+│            ⚠️ Sin datos. Usa 'Gestionar Datos' para iniciar.                │
+╰───────────────────────────────────────────────────────────────────────────────╯
 
-# Resultado esperado:
-# ✅ 4 compras procesadas
-# ✅ 3 ventas analizadas  
-# ✅ P&L calculado: $151.31 USD
-# ✅ Reportes generados en data/reports/
+╭───────────────────────────── 🏠 MENÚ PRINCIPAL ─────────────────────────────╮
+│   1️⃣         📝 Gestionar Datos de Transacciones                           │
+│   2️⃣         📊 Ver Resumen Financiero Global                              │
+│   3️⃣         📈 Análisis Detallado por Categoría                           │
+│   4️⃣         🔧 Herramientas y Utilidades                                  │
+│   5️⃣         ❌ Salir del Dashboard                                         │
+╰─────────────────────────────────────────────────────────────────────────────╯
+
+✨ Selecciona una opción: 
 ```
 
 ---
@@ -197,7 +248,7 @@ venv\Scripts\activate     # Windows
 pip install -r requirements.txt
 
 # Verificar instalación con el dashboard moderno
-python src/dashboard_p2p_rich.py
+python src/dashboard_p2p.py
 ```
 
 #### Opción 2: Instalación de Desarrollo
@@ -228,48 +279,12 @@ docker run -v $(pwd)/data:/app/data p2p-profit:latest
 
 ### 🎬 **Demo Interactivo**
 
-#### Dashboard Moderno con Rich (Recomendado)
 ```bash
-# Ejecutar dashboard con interfaz moderna
-python src/dashboard_p2p_rich.py
-```
-
-**Salida esperada - Interfaz Rich:**
-```
-╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
-║                                                                                                          ║
-║  ✨ P2P CRYPTO TRACKER ✨ Dashboard Interactivo Profesional                                              ║
-║                                                                                                          ║
-╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
-
-╭──────────────────────────── 📊 ESTADO RÁPIDO ────────────────────────────────╮
-│ 🛍️ Compras Registradas:              0                                        │
-│ 💸 Ventas Registradas:               0                                         │
-│ 🔄 Conversiones Fiat:                0                                         │
-│                                                                               │
-│            ⚠️ Sin datos. Usa 'Gestionar Datos' para iniciar.                │
-╰───────────────────────────────────────────────────────────────────────────────╯
-
-╭───────────────────────────── 🏠 MENÚ PRINCIPAL ─────────────────────────────╮
-│                                                                             │
-│  1️⃣   📝 Gestionar Datos de Transacciones                                  │
-│  2️⃣   📊 Ver Resumen Financiero Global                                      │
-│  3️⃣   📈 Análisis Detallado por Categoría                                   │
-│  4️⃣   🔧 Herramientas y Utilidades                                          │
-│  5️⃣   ❌ Salir del Dashboard                                                │
-│                                                                             │
-╰─────────────────────────────────────────────────────────────────────────────╯
-
-✨ Selecciona una opción: 
-```
-
-#### Dashboard Clásico
-```bash
-# Ejecutar dashboard con datos de ejemplo
+# Ejecutar dashboard interactivo
 python src/dashboard_p2p.py
 ```
 
-**Salida esperada - Interfaz Clásica:**
+**Salida esperada:**
 ```
 ✨────────────────────────────────────────────────────────────✨
 │               📊 P2P CRYPTO TRACKER 📊                     │
@@ -332,100 +347,73 @@ P&L: $212.76 - $201.07 = $11.69 ✅
 
 ---
 
-## �� Uso Detallado
+## 🔧 Uso Detallado
 
-### 🎨 **Dashboard Moderno con Rich (Recomendado)**
+### 🎨 **Dashboard Moderno con Rich**
 
-#### Características Destacadas de Rich
+**Comandos principales:**
 ```bash
-python src/dashboard_p2p_rich.py
+# Iniciar dashboard interactivo moderno
+python src/dashboard_p2p.py
+
+# Procesamiento automático en batch
+python src/script_p2p_tracker.py
 ```
 
-**Ventajas de la interfaz Rich:**
-- ✨ **Diseño Visual Moderno**: Bordes redondeados, colores profesionales y layout elegante
-- 🎯 **Navegación Intuitiva**: Breadcrumbs y menús claramente organizados  
+**Características destacadas de Rich:**
+- ✨ **Diseño Visual Moderno**: Paneles redondeados, colores profesionales y layout elegante
+- 🎯 **Navegación Intuitiva**: Menús claramente organizados con feedback visual
 - 📊 **Tablas Elegantes**: Formato automático con colores para P&L positivo/negativo
 - ✅ **Validación Visual**: Mensajes de error y éxito con paneles coloridos
 - 🔄 **Paginación Inteligente**: Navegación fluida en datasets grandes
 - 🎨 **Tema Consistente**: Paleta de colores unificada en toda la aplicación
 
-#### Gestión de Datos Mejorada
-**Formulario de Compra con Rich:**
-- 🆔 **ID Automático**: Generación secuencial inteligente (C001, C002, etc.)
-- 🔍 **Validación Robusta**: Entrada de datos con verificación en tiempo real
-- 📋 **Resumen Visual**: Panel de confirmación antes de guardar
-- 💰 **Cálculo Automático**: Costo total y comisiones computados al vuelo
-- 🏦 **Soporte Multi-Plataforma**: Binance, KuCoin, Bybit, WhatsApp, etc.
+**Navegación del Dashboard:**
+```
+1️⃣ Gestionar Datos de Transacciones
+   ├── 📝 Nueva Compra USDT
+   ├── 💸 Nueva Venta USDT  
+   ├── 🔄 Nueva Conversión Fiat
+   └── 👀 Ver Datos Existentes
 
-### 🎛️ **Dashboard Clásico**
+2️⃣ Ver Resumen Financiero Global
+   ├── 💰 P&L Total (Ganancias/Pérdidas)
+   ├── 📊 Estado del Inventario
+   ├── 📈 ROI y Métricas Principales
+   └── 🏢 Desglose por Plataforma
 
-#### Gestión de Datos
+3️⃣ Análisis Detallado por Categoría
+   ├── 🏪 Análisis por Plataforma
+   ├── 💱 Análisis por Moneda
+   ├── 📅 Análisis Temporal
+   └── 📋 Historial de Transacciones
+
+4️⃣ Herramientas y Utilidades
+   ├── 💾 Crear Backup de Datos
+   ├── 📄 Estado de Archivos
+   ├── ✅ Validar Integridad de Datos
+   └── 🔧 Configuración del Sistema
+```
+
+### 🚀 **Scripts y Automatización**
+
+#### Dashboard Principal Rich
 ```bash
 python src/dashboard_p2p.py
-# Seleccionar: 1️⃣ Gestionar Datos
 ```
+- 🌈 **Interfaz Rich moderna** con paneles elegantes
+- 📝 **Gestión completa** de transacciones con validación visual
+- 📊 **Análisis en tiempo real** de P&L y ROI con tablas coloridas
+- 🔧 **Herramientas administrativas** con feedback profesional
 
-**Características del formulario clásico:**
-- ✅ **IDs automáticos**: Sistema de numeración incremental.
-- ✅ **Validación robusta de entradas**: Con reintentos y mensajes claros para cada campo.
-- ✨ **Feedback visual**: Iconos y mensajes para guiar al usuario.
-- 📋 **Resumen de datos ingresados**: Verificación antes de la confirmación final.
-- 🏦 **Cálculo de comisiones**: Lógica adaptable (ej. automático para Binance, manual para otros).
-- 🌐 **Múltiples plataformas**: Soporte para diversas fuentes de transacciones.
-
-#### Análisis Avanzado
+#### Script Automático
 ```bash
-# Acceder a: 3️⃣ Análisis Detallado → 4️⃣ Dashboard Completo
+python src/script_p2p_tracker.py
 ```
-
-**Métricas incluidas:**
-- 📊 **P&L Total**: Ganancia/pérdida acumulada
-- 📈 **ROI**: Retorno sobre inversión
-- 🪙 **Stock actual**: USDT en inventario
-- 💰 **CPP actual**: Costo promedio ponderado
-- 💱 **Fiat disponible**: UYU/USD de ventas sin reinvertir
-
-### 🤖 **Script Automático**
-
-#### Procesamiento Batch
-```bash
-cd src/
-python script_p2p_tracker.py
-```
-
-**Flujo de procesamiento:**
-1. 🔍 **Validación**: Verificar integridad de datos
-2. 📊 **Cálculos**: CPP y P&L por transacción
-3. 💱 **Conversiones**: Aplicar tasas de cambio
-4. 📈 **Reportes**: Generar CSV automáticamente
-5. ✅ **Verificación**: Logs detallados de proceso
-
-#### Integración con APIs
-```python
-# Ejemplo de uso programático
-from src.script_p2p_tracker import P2PTracker
-
-tracker = P2PTracker()
-tracker.cargar_datos('compras.csv', 'ventas.csv')
-tracker.procesar_cpp_y_pl()
-resultados = tracker.generar_reportes()
-```
-
-### 🔧 **Herramientas Administrativas**
-
-#### Backup Automático
-```bash
-# Desde el dashboard: 4️⃣ Herramientas → 3️⃣ Exportar Backup
-```
-- 📂 **Ubicación**: `data/backups/backup_YYYYMMDD_HHMMSS/`
-- 🗜️ **Formato**: CSV con timestamp
-- 🔒 **Integridad**: Verificación de completitud
-
-#### Estado del Sistema
-```bash
-# Verificar archivos y estado
-# Dashboard: 4️⃣ Herramientas → 1️⃣ Estado de Archivos
-```
+- 🤖 **Procesamiento batch** de datos
+- 📈 **Reportes automáticos** en CSV
+- 🔍 **Validación de integridad** de datos
+- ⚡ **Cálculos optimizados** de CPP y P&L
 
 ---
 
@@ -685,162 +673,41 @@ git push origin feature/nueva-funcionalidad
 - 💬 **Comunidad**: [Discord Server](https://discord.gg/p2p-profit)
 - 📰 **Blog**: [Actualizaciones y tips](https://blog.p2p-profit.com)
 
-### ❓ **FAQ**
+## ❓ FAQ y Troubleshooting
 
-<details>
-<summary><b>¿Es seguro usar este sistema con mis datos reales?</b></summary>
+### 🔧 **Problemas Comunes**
 
-Sí, el sistema funciona completamente offline y no envía datos a ningún servidor externo. Todos los cálculos se realizan localmente en tu computadora.
-</details>
-
-<details>
-<summary><b>¿Puedo usar esto para declaraciones fiscales?</b></summary>
-
-El sistema genera cálculos precisos usando metodología CPP estándar, pero recomendamos consultar con un contador antes de usar para fines fiscales oficiales.
-</details>
-
-<details>
-<summary><b>¿Qué pasa si tengo miles de transacciones?</b></summary>
-
-El sistema está optimizado para manejar grandes volúmenes de datos. Con pandas, puede procesar eficientemente miles de transacciones en segundos.
-</details>
-
-<details>
-<summary><b>¿Puedo agregar más exchanges además de Binance?</b></summary>
-
-Sí, el sistema es extensible. Puedes agregar cualquier plataforma modificando las configuraciones de comisiones en el código.
-</details>
-
----
-
-## 📊 Comparación Detallada de Herramientas
-
-| Característica      | Dashboard Interactivo (`src/`)     | Script Principal (`src/`)            |
-|---------------------|------------------------------------|--------------------------------------|
-| **Interfaz**        | 📊 Consola Interactiva (Menús)   | 📄 Terminal (Ejecución directa)    |
-| **Entrada datos**   | ✅ Detallada (Formularios, a `data/`) | ❌ Manual (Editando CSV en `data/`)   |
-| **Cálculos**        | 🔄 Automáticos (Al visualizar)   | 🔄 Automáticos (Al ejecutar)       |
-| **Análisis Profundo**| ⭐ Perfecto                        | ⭐ Perfecto (Datos en `data/reports/`) |
-| **Gestión Datos**   | ✅ Avanzada (Menús, en `data/`)    | ❌ Limitada (Directo en `data/`)     |
-| **Exportación CSV** | ✅ Opcional (Desde menú, a `data/reports/`) | ⭐ Automática (Al ejecutar, a `data/reports/`) |
-
-### 💡 **Cuándo Usar Cada Herramienta**
-
-#### 📊 **Dashboard Interactivo (`src/dashboard_p2p.py`)**
+**⚠️ Error: ModuleNotFoundError**
 ```bash
+# Solución:
+pip install -r requirements.txt
+```
+
+**⚠️ Error: FileNotFoundError**
+```bash
+# Verificar que existan los archivos CSV:
 python src/dashboard_p2p.py
+# → Seleccionar 4️⃣ Herramientas → 1️⃣ Estado de Archivos
 ```
-**Usa cuando:**
-- ✅ Necesitas análisis P&L detallado y visualización en consola
-- ✅ Quieres ver flujo de fiat completo
-- ✅ Necesitas ingresar datos de forma interactiva (se guardan en `data/`)
-- ✅ Necesitas gestión avanzada de archivos CSV (crear en `data/`, borrar, backup a `data/backups/`)
-- ✅ Requieres formularios con todas las opciones para el ingreso de datos
 
-#### 🤖 **Script Principal (`src/script_p2p_tracker.py`)**
+**⚠️ Dashboard no muestra datos**
 ```bash
-python src/script_p2p_tracker.py
-```
-**Usa cuando:**
-- ✅ Necesitas exportar reportes automáticamente a archivos CSV
-- ✅ Quieres procesamiento batch de los datos (desde `data/`)
-- ✅ Podrías integrar la salida con otros sistemas o flujos de trabajo
+# 1. Verificar datos existentes
+python src/dashboard_p2p.py
+# → Seleccionar 1️⃣ Gestionar Datos → 4️⃣ Ver Datos
 
----
-
-## 📁 Formato de Archivos CSV
-
-El sistema espera tres archivos CSV específicos en el directorio `data/`:
-
-### 1. `data/compras_usdt.csv`
-```csv
-ID_Compra,Fecha_Compra,Cantidad_USDT_Comprada,Moneda_Pago,Precio_Unitario_Moneda_Pago,Tasa_Cambio_UYU_USD_Compra,Fuente_De_Fondos_Fiat,Comisiones_Compra_Moneda_Pago,Plataforma
-C001,2024-01-15,100.0,USD,1.0,1.0,Capital Nuevo,0.0,Binance
-C002,2024-02-10,200.0,UYU,41.0,41.0,Venta_ID_V001,50.0,WhatsApp
+# 2. Agregar datos de prueba
+# → Seleccionar 1️⃣ Gestionar Datos → 1️⃣ Nueva Compra
 ```
 
-### 2. `data/ventas_usdt.csv`
-```csv
-ID_Venta,Fecha_Venta,Cantidad_USDT_Vendida,Moneda_Recibida,Precio_Unitario_Moneda_Recibida,Tasa_Cambio_UYU_USD_Venta,Comisiones_Venta_Moneda_Recibida,Plataforma
-V001,2024-02-20,80.0,USD,1.03,1.0,0.5,Otro
-V002,2024-03-15,120.0,UYU,42.5,42.5,100.0,WhatsApp
+**⚠️ Cálculos incorrectos de P&L**
+```bash
+# Validar integridad de datos
+python src/dashboard_p2p.py
+# → Seleccionar 4️⃣ Herramientas → 3️⃣ Validar Datos
 ```
 
-### 3. `data/conversiones_fiat.csv` (Opcional)
-```csv
-ID_Conversion,Fecha_Conversion,Moneda_Origen,Cantidad_Origen,Moneda_Destino,Cantidad_Destino,ID_Venta_Asociada,Notas
-CF001,2024-03-20,UYU,5000.0,USD,120.0,V002,Conversion de UYU restante de V002 a USD
-```
-
-> **Nota**: Si alguno de estos archivos no existe al ejecutar los scripts, se crearán automáticamente con datos de ejemplo en la carpeta `data/` mediante la función `crear_archivos_ejemplo()` del script `src/script_p2p_tracker.py`.
-
 ---
-
-## 🔄 Flujo de Procesamiento Detallado
-
-### 1. **Carga de Datos**
-- Lee los archivos CSV desde `data/` y valida los datos
-- Convierte fechas y ordena transacciones cronológicamente
-
-### 2. **Cálculos Preliminares**
-- **Compras**: Calcula costo total en USD usando tasas de cambio
-- **Ventas**: Calcula ingresos netos en USD
-
-### 3. **Procesamiento CPP**
-- Mantiene inventario USDT con costo promedio ponderado
-- Calcula P&L real de cada venta usando CPP
-
-### 4. **Seguimiento de Fiat**
-- Rastrea el fiat generado por cada venta
-- Controla cómo se reutiliza en nuevas compras
-- Maneja conversiones UYU ↔ USD
-
-### 5. **Generación de Reportes**
-- **Ventas con P&L**: Ganancia/pérdida de cada operación
-- **Inventario USDT**: Stock actual y CPP
-- **Flujo de Fiat**: Saldos disponibles por moneda
-
----
-
-## 💡 Tips de Uso Avanzados
-
-### 🏷️ **Formato de Fuente de Fondos**
-- `"Capital Nuevo"`: Dinero nuevo aportado
-- `"Venta_ID_V001"`: Proviene de la venta V001
-- `"Conversion_Fiat_ID_CF001"`: Proviene de conversión CF001
-
-### 🔄 **Formato de Conversiones**
-- `"Restante_Venta_ID_V002"`: Conversión del restante de venta V002
-- `"Ahorros_Generales_UYU"`: Conversión de ahorros acumulados
-
-### 📊 **Datos de Ejemplo Automáticos**
-El sistema puede trabajar con tus datos reales. Si los archivos de datos no existen al ejecutar los scripts por primera vez, se crearán con **datos de ejemplo** para demostración dentro del directorio `data/`.
-
----
-
-## 🚨 Consideraciones Importantes
-
-### ⚠️ **Requisitos Críticos**
-1. **Orden cronológico**: Las fechas deben permitir ordenación correcta
-2. **IDs únicos**: Cada transacción debe tener ID único
-3. **Plataforma**: Indicar la plataforma (ej. Binance, WhatsApp, Otro) para cada compra/venta
-4. **Tasas de cambio**: Siempre en formato UYU/USD cuando aplique
-5. **Consistencia**: Mantener formato de moneda ("USD" o "UYU")
-
-### 🔧 **Características Técnicas Implementadas**
-- ✅ Código modular y bien documentado
-- ✅ Manejo de errores robusto
-- ✅ Interfaz de consola interactiva
-- ✅ Compatible con pandas estándar
-- ✅ Cálculo automático opcional de comisiones de Binance
-- ✅ Archivos de ejemplo automáticos
-
-### 🛠️ **Personalización Avanzada**
-El código está diseñado para ser fácilmente modificable:
-- **Formularios**: Agregar campos o validaciones en `src/dashboard_p2p.py`
-- **Cálculos**: Modificar lógica o añadir nuevas métricas en `src/script_p2p_tracker.py`
-- **Integración**: Conectar con APIs o bases de datos
-
 
 <div align="center">
 
