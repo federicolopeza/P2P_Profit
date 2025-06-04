@@ -46,6 +46,7 @@
 | 🧮 **Cálculo CPP Preciso** | Metodología de Costo Promedio Ponderado para cálculo exacto de P&L | ✅ |
 | 💱 **Soporte Multi-Moneda** | Manejo de USD y UYU con tasas de cambio dinámicas | ✅ |
 | 📊 **Dashboard Interactivo** | Interfaz de consola completa para gestión y análisis | ✅ |
+| 🚀 **Auto-Inicialización** | Genera automáticamente archivos CSV en primera ejecución | ✅ |
 | 🤖 **Procesamiento Automático** | Script batch para procesamiento masivo de datos | ✅ |
 | 📈 **Reportes Avanzados** | Generación automática de CSV con métricas detalladas | ✅ |
 | 🔄 **Seguimiento de Flujo Fiat** | Rastreo completo del dinero generado por ventas | ✅ |
@@ -135,7 +136,7 @@ python src/script_p2p_tracker.py
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/user/p2p-profit.git
+git clone https://github.com/falopp/p2p-profit.git
 cd p2p-profit
 
 # 2. Instalar dependencias (incluye Rich para interfaz moderna)

@@ -87,6 +87,65 @@ class P2PDashboardRich:
             'neutral': 'white',
             'muted': 'bright_black'
         }
+        
+        # Inicializar archivos CSV si no existen
+        self._inicializar_archivos_csv()
+
+    def _inicializar_archivos_csv(self):
+        """Crea los archivos CSV con headers si no existen"""
+        try:
+            # Definir headers para cada archivo CSV
+            csv_configs = {
+                COMPRAS_CSV: {
+                    'headers': ['ID_Compra', 'Fecha_Compra', 'Cantidad_USDT_Comprada', 'Moneda_Pago',
+                               'Precio_Unitario_Moneda_Pago', 'Tasa_Cambio_UYU_USD_Compra',
+                               'Fuente_De_Fondos_Fiat', 'Comisiones_Compra_Moneda_Pago', 'Plataforma'],
+                    'description': 'Compras USDT'
+                },
+                VENTAS_CSV: {
+                    'headers': ['ID_Venta', 'Fecha_Venta', 'Cantidad_USDT_Vendida', 'Moneda_Recibida',
+                               'Precio_Unitario_Moneda_Recibida', 'Tasa_Cambio_UYU_USD_Venta',
+                               'Comisiones_Venta_Moneda_Recibida', 'Plataforma'],
+                    'description': 'Ventas USDT'
+                },
+                CONVERSIONES_CSV: {
+                    'headers': ['ID_Conversion', 'Fecha_Conversion', 'Monto_Origen', 'Moneda_Origen',
+                               'Monto_Destino', 'Moneda_Destino', 'Tasa_Cambio'],
+                    'description': 'Conversiones Fiat'
+                }
+            }
+            
+            archivos_creados = []
+            
+            for ruta_archivo, config in csv_configs.items():
+                if not os.path.exists(ruta_archivo):
+                    # Crear DataFrame con solo los headers
+                    df_empty = pd.DataFrame(columns=config['headers'])
+                    # Guardar el archivo CSV
+                    df_empty.to_csv(ruta_archivo, index=False, encoding='utf-8')
+                    archivos_creados.append(config['description'])
+            
+            # Mostrar mensaje discreto solo en primera ejecución
+            if archivos_creados:
+                message = Text()
+                message.append("📁 ", style="bright_blue")
+                message.append("Primera ejecución detectada - Archivos CSV inicializados: ", style="dim white")
+                message.append(f"{', '.join(archivos_creados)}", style="bright_green")
+                
+                panel = Panel(
+                    message,
+                    style="dim blue",
+                    box=box.ROUNDED,
+                    padding=(0, 1)
+                )
+                self.console.print(panel)
+                self.console.print()
+                
+        except Exception as e:
+            # Log silencioso de errores
+            with open(LOG_ERRORES_TXT, 'a', encoding='utf-8') as f:
+                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                f.write(f"[{timestamp}] Error al inicializar CSV: {e}\n")
 
     def _create_theme(self):
         """Crea el tema personalizado para el dashboard"""
