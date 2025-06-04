@@ -59,7 +59,7 @@ class P2PTracker:
             # Cargar compras
             if os.path.exists(archivo_compras):
                 self.df_compras = pd.read_csv(archivo_compras)
-                self.df_compras['Fecha_Compra'] = pd.to_datetime(self.df_compras['Fecha_Compra'])
+                self.df_compras['Fecha_Compra'] = pd.to_datetime(self.df_compras['Fecha_Compra'], format='mixed')
                 if 'Plataforma' not in self.df_compras.columns:
                     self.df_compras['Plataforma'] = 'Otro' # Retrocompatibilidad
                 self.df_compras['Plataforma'] = self.df_compras['Plataforma'].astype(str).str.lower()
@@ -71,7 +71,7 @@ class P2PTracker:
             # Cargar ventas
             if os.path.exists(archivo_ventas):
                 self.df_ventas = pd.read_csv(archivo_ventas)
-                self.df_ventas['Fecha_Venta'] = pd.to_datetime(self.df_ventas['Fecha_Venta'])
+                self.df_ventas['Fecha_Venta'] = pd.to_datetime(self.df_ventas['Fecha_Venta'], format='mixed')
                 if 'Plataforma' not in self.df_ventas.columns:
                     self.df_ventas['Plataforma'] = 'Otro' # Retrocompatibilidad
                 self.df_ventas['Plataforma'] = self.df_ventas['Plataforma'].astype(str).str.lower()
@@ -83,7 +83,7 @@ class P2PTracker:
             # Cargar conversiones (opcional)
             if archivo_conversiones and os.path.exists(archivo_conversiones):
                 self.df_conversiones = pd.read_csv(archivo_conversiones)
-                self.df_conversiones['Fecha_Conversion'] = pd.to_datetime(self.df_conversiones['Fecha_Conversion'])
+                self.df_conversiones['Fecha_Conversion'] = pd.to_datetime(self.df_conversiones['Fecha_Conversion'], format='mixed')
                 print(f"✅ Cargadas {len(self.df_conversiones)} conversiones de fiat")
             else:
                 self.df_conversiones = pd.DataFrame()
