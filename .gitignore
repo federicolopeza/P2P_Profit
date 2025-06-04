@@ -117,27 +117,31 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Backup P2P
-# backup_*.csv SE REEMPLAZA POR LA SIGUIENTE LÍNEA PARA REFLEJAR LA NUEVA UBICACIÓN
-data/backups/
+# ===== P2P PROFIT SPECIFIC IGNORES =====
 
-# Archivos de datos (opcional, si no quieres subir datos de ejemplo/reales al repo)
-# Los archivos CSV en data/ son tratados como plantillas/ejemplos por ahora.
-# Descomenta las siguientes líneas si deseas ignorarlos completamente.
+# Archivos CSV con datos personales - NUNCA subir al repo
 data/compras_usdt.csv
 data/ventas_usdt.csv
 data/conversiones_fiat.csv
 
-# Reportes generados en la carpeta data/reports
+# Reportes generados automáticamente
 data/reports/
-
-# Reportes generados en la raíz del proyecto (si existen, pueden ser antiguos)
 reporte_flujo_fiat.csv
 reporte_ventas_pl.csv
 
-# Log de errores del dashboard
+# Backups con datos sensibles
+data/backups/
+
+# Logs del sistema
 log_errores_dashboard.txt
+*.log
 
 # IDE specific files
 .vscode/
-.idea/ 
+.idea/
+
+# Archivos temporales del sistema
+.DS_Store
+Thumbs.db
+data/compras_usdt.csv
+data/conversiones_fiat.csv
