@@ -56,13 +56,21 @@
 
 ### 🎨 **Herramientas Incluidas**
 
-🎛️ Dashboard Interactivo (src/dashboard_p2p.py)
-├── 📝 Gestión completa de datos
-├── 📊 Visualización en tiempo real
-├── 🔧 Herramientas de administración
-└── 📤 Exportación manual de reportes
+🎛️ Dashboard Interactivo (`src/dashboard_p2p.py`)
+├── 📝 Gestión de datos con formularios guiados, validación en tiempo real y feedback visual.
+├── 📊 Visualización de datos mejorada con formato claro y paginación.
+├── ✨ Interfaz de consola con menús estéticos y navegación intuitiva.
+├── 🔧 Herramientas de administración (backups, estado de archivos, etc.).
+└── 📤 Exportación manual de reportes (desde el script principal invocado).
 
-🤖 Script Automático (src/script_p2p_tracker.py)
+🎨 Dashboard Rich (`src/dashboard_p2p_rich.py`) - ¡NUEVO!
+├── 🌈 Interfaz CLI moderna con la biblioteca Rich
+├── 📊 Tablas elegantes con colores y formato profesional
+├── 🎯 Menús intuitivos con navegación breadcrumb
+├── ✅ Validación en tiempo real con feedback visual
+└── 📱 Experiencia de usuario optimizada para consola
+
+🤖 Script Automático (`src/script_p2p_tracker.py`)
 ├── ⚡ Procesamiento batch ultra-rápido
 ├── 📈 Cálculos CPP automatizados
 ├── 📊 Generación automática de reportes
@@ -84,7 +92,9 @@ cd p2p-profit
 pip install -r requirements.txt
 
 # 3. ¡Ejecutar!
-python src/dashboard_p2p.py  # Dashboard interactivo
+python src/dashboard_p2p_rich.py   # Dashboard interactivo moderno con Rich
+# o
+python src/dashboard_p2p.py       # Dashboard interactivo clásico
 # o
 python src/script_p2p_tracker.py  # Procesamiento automático
 ```
@@ -92,7 +102,25 @@ python src/script_p2p_tracker.py  # Procesamiento automático
 ### 🎯 **Primer uso en 30 segundos**
 
 ```bash
-# El sistema creará automáticamente datos de ejemplo
+# Dashboard moderno con Rich (RECOMENDADO)
+python src/dashboard_p2p_rich.py
+
+# Resultado esperado - Interfaz Rich moderna:
+# ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+# ║                                                                                                          ║
+# ║  ✨ P2P CRYPTO TRACKER ✨ Dashboard Interactivo Profesional                                              ║
+# ║                                                                                                          ║
+# ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+# 
+# ╭─────────────────────────── 📊 ESTADO RÁPIDO ────────────────────────────────╮
+# │ 🛍️ Compras Registradas:              0                                      │
+# │ 💸 Ventas Registradas:               0                                       │
+# │ 🔄 Conversiones Fiat:                0                                       │
+# │                                                                             │
+# │            ⚠️ Sin datos. Usa 'Gestionar Datos' para iniciar.              │
+# ╰─────────────────────────────────────────────────────────────────────────────╯
+
+# Procesamiento automático tradicional
 python src/script_p2p_tracker.py
 
 # Resultado esperado:
@@ -146,6 +174,7 @@ python src/script_p2p_tracker.py
 | **Python** | 3.7+ | 3.9+ |
 | **Pandas** | 1.5.0+ | 2.0+ |
 | **NumPy** | 1.21.0+ | 1.24+ |
+| **Rich** | 13.0.0+ | 14.0+ |
 | **OS** | Windows 10, macOS 10.14, Ubuntu 18.04 | Cualquier versión reciente |
 | **RAM** | 4GB | 8GB+ |
 | **Almacenamiento** | 100MB | 1GB+ |
@@ -164,11 +193,11 @@ source venv/bin/activate  # Linux/macOS
 # o
 venv\Scripts\activate     # Windows
 
-# Instalar dependencias
+# Instalar dependencias (incluye Rich para interfaz moderna)
 pip install -r requirements.txt
 
-# Verificar instalación
-python src/script_p2p_tracker.py
+# Verificar instalación con el dashboard moderno
+python src/dashboard_p2p_rich.py
 ```
 
 #### Opción 2: Instalación de Desarrollo
@@ -199,30 +228,75 @@ docker run -v $(pwd)/data:/app/data p2p-profit:latest
 
 ### 🎬 **Demo Interactivo**
 
+#### Dashboard Moderno con Rich (Recomendado)
+```bash
+# Ejecutar dashboard con interfaz moderna
+python src/dashboard_p2p_rich.py
+```
+
+**Salida esperada - Interfaz Rich:**
+```
+╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                                          ║
+║  ✨ P2P CRYPTO TRACKER ✨ Dashboard Interactivo Profesional                                              ║
+║                                                                                                          ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+╭──────────────────────────── 📊 ESTADO RÁPIDO ────────────────────────────────╮
+│ 🛍️ Compras Registradas:              0                                        │
+│ 💸 Ventas Registradas:               0                                         │
+│ 🔄 Conversiones Fiat:                0                                         │
+│                                                                               │
+│            ⚠️ Sin datos. Usa 'Gestionar Datos' para iniciar.                │
+╰───────────────────────────────────────────────────────────────────────────────╯
+
+╭───────────────────────────── 🏠 MENÚ PRINCIPAL ─────────────────────────────╮
+│                                                                             │
+│  1️⃣   📝 Gestionar Datos de Transacciones                                  │
+│  2️⃣   📊 Ver Resumen Financiero Global                                      │
+│  3️⃣   📈 Análisis Detallado por Categoría                                   │
+│  4️⃣   🔧 Herramientas y Utilidades                                          │
+│  5️⃣   ❌ Salir del Dashboard                                                │
+│                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────╯
+
+✨ Selecciona una opción: 
+```
+
+#### Dashboard Clásico
 ```bash
 # Ejecutar dashboard con datos de ejemplo
 python src/dashboard_p2p.py
 ```
 
-**Salida esperada:**
+**Salida esperada - Interfaz Clásica:**
 ```
-╔════════════════════════════════════════════════════════════╗
-║               🎯 P2P CRYPTO TRACKER                        ║
-║                  Dashboard P2P Interactivo                ║
-╚════════════════════════════════════════════════════════════╝
+✨────────────────────────────────────────────────────────────✨
+│               📊 P2P CRYPTO TRACKER 📊                     │
+│                 📈 Dashboard Interactivo                   │
+✨────────────────────────────────────────────────────────────✨
 
-📊 Estado: 4 compras | 3 ventas | 1 conversiones
-🟢 Datos disponibles
+╔════════════════════════════════════════════════════════╗
+║                    ESTADO RÁPIDO                       ║
+╠════════════════════════════════════════════════════════╣
+║ 🛍️ Compras Registradas: 0                            ║
+║ 💸 Ventas Registradas:  0                            ║
+║ 🔄 Conversiones Fiat: 0                            ║
+║                                                        ║
+║ ⚠️ Sin datos. Usa 'Gestionar Datos' para iniciar.  ║
+╚════════════════════════════════════════════════════════╝
 
-┌──────────────────────────────────────────────────────────┐
-│                    MENÚ PRINCIPAL                        │
-├──────────────────────────────────────────────────────────┤
-│  1️⃣  📝 Gestionar Datos                                  │
-│  2️⃣  📊 Ver Resumen                                      │
-│  3️⃣  📈 Análisis Detallado                               │
-│  4️⃣  🔧 Herramientas                                     │
-│  5️⃣  ❌ Salir                                            │
-└──────────────────────────────────────────────────────────┘
+╔════════════════════════════════════════════════════════╗
+║                    MENÚ PRINCIPAL                      ║
+╠════════════════════════════════════════════════════════╣
+║  1️⃣  📝 Gestionar Datos de Transacciones              ║
+║  2️⃣  📊 Ver Resumen Financiero Global                 ║
+║  3️⃣  📈 Análisis Detallado por Categoría              ║
+║  4️⃣  🔧 Herramientas y Utilidades                     ║
+║  5️⃣  ❌ Salir del Dashboard                           ║
+╚════════════════════════════════════════════════════════╝
+
+✨ Selecciona una opción y presiona Enter: 
 ```
 
 ### 📈 **Ejemplo de Datos Procesados**
@@ -258,9 +332,32 @@ P&L: $212.76 - $201.07 = $11.69 ✅
 
 ---
 
-## 🔧 Uso Detallado
+## �� Uso Detallado
 
-### 🎛️ **Dashboard Interactivo**
+### 🎨 **Dashboard Moderno con Rich (Recomendado)**
+
+#### Características Destacadas de Rich
+```bash
+python src/dashboard_p2p_rich.py
+```
+
+**Ventajas de la interfaz Rich:**
+- ✨ **Diseño Visual Moderno**: Bordes redondeados, colores profesionales y layout elegante
+- 🎯 **Navegación Intuitiva**: Breadcrumbs y menús claramente organizados  
+- 📊 **Tablas Elegantes**: Formato automático con colores para P&L positivo/negativo
+- ✅ **Validación Visual**: Mensajes de error y éxito con paneles coloridos
+- 🔄 **Paginación Inteligente**: Navegación fluida en datasets grandes
+- 🎨 **Tema Consistente**: Paleta de colores unificada en toda la aplicación
+
+#### Gestión de Datos Mejorada
+**Formulario de Compra con Rich:**
+- 🆔 **ID Automático**: Generación secuencial inteligente (C001, C002, etc.)
+- 🔍 **Validación Robusta**: Entrada de datos con verificación en tiempo real
+- 📋 **Resumen Visual**: Panel de confirmación antes de guardar
+- 💰 **Cálculo Automático**: Costo total y comisiones computados al vuelo
+- 🏦 **Soporte Multi-Plataforma**: Binance, KuCoin, Bybit, WhatsApp, etc.
+
+### 🎛️ **Dashboard Clásico**
 
 #### Gestión de Datos
 ```bash
@@ -268,11 +365,13 @@ python src/dashboard_p2p.py
 # Seleccionar: 1️⃣ Gestionar Datos
 ```
 
-**Características del formulario:**
-- ✅ **IDs automáticos**: Sistema de numeración incremental
-- ✅ **Validación en tiempo real**: Verificación de tipos y rangos
-- ✅ **Cálculo de comisiones**: Automático para Binance
-- ✅ **Múltiples plataformas**: Binance, WhatsApp, Otros
+**Características del formulario clásico:**
+- ✅ **IDs automáticos**: Sistema de numeración incremental.
+- ✅ **Validación robusta de entradas**: Con reintentos y mensajes claros para cada campo.
+- ✨ **Feedback visual**: Iconos y mensajes para guiar al usuario.
+- 📋 **Resumen de datos ingresados**: Verificación antes de la confirmación final.
+- 🏦 **Cálculo de comisiones**: Lógica adaptable (ej. automático para Binance, manual para otros).
+- 🌐 **Múltiples plataformas**: Soporte para diversas fuentes de transacciones.
 
 #### Análisis Avanzado
 ```bash
