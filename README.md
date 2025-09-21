@@ -136,7 +136,7 @@ python src/script_p2p_tracker.py
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/falopp/p2p_profit.git
+git clone https://github.com/federicolopeza/p2p_profit.git
 cd p2p_profit
 
 # 2. Instalar dependencias (incluye Rich para interfaz moderna)
